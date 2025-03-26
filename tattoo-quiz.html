@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Should I Get a Tattoo? Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+      background: #f9fafb;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 30px;
+      color: #222;
+    }
+    .question {
+      margin-bottom: 25px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .question p {
+      margin: 0 0 10px;
+      font-weight: 500;
+    }
+    .options label {
+      margin-right: 15px;
+      margin-bottom: 5px;
+      display: inline-block;
+      background-color: #f0f0f0;
+      padding: 8px 14px;
+      border-radius: 5px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .options input[type="radio"] {
+      margin-right: 6px;
+    }
+    .options label:hover {
+      background-color: #e0e0e0;
+    }
+    .result {
+      font-size: 1.1em;
+      margin-top: 40px;
+      padding: 20px;
+      border: 2px solid #ddd;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    button {
+      display: block;
+      padding: 12px 30px;
+      font-size: 1em;
+      font-weight: bold;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 30px auto 0;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Should I Get a Tattoo?</h1>
+  <form id="quizForm">
+    <div id="quiz"></div>
+    <button type="submit">See My Result</button>
+  </form>
+  <div id="result" class="result"></div>
+
+  <script>
+    const questions = [
+      "I feel like I know myself better now than I did two years ago.",
+      "I’ve wanted a tattoo consistently for at least six months.",
+      "I want a tattoo for my own personal reasons, not because of outside influence.",
+      "I’ve made other permanent decisions in life that I don’t regret.",
+      "A tattoo could reflect something meaningful about my journey or identity.",
+      "I do NOT feel pressured by friends or social media to get a tattoo.",
+      "I am okay with the possibility that I might regret it someday.",
+      "I would still want a tattoo even if no one else ever saw it.",
+      "I already have a specific tattoo design or concept in mind.",
+      "I want my tattoo to hold meaning or symbolism.",
+      "I’ve spent time exploring different tattoo styles.",
+      "I’ve saved or sketched tattoo ideas I could see myself getting.",
+      "I am currently in good physical health.",
+      "I don’t have any skin conditions or allergies that would interfere with tattoo healing.",
+      "I understand how tattoos age and change over time.",
+      "I’ve researched what aftercare is involved in getting a tattoo.",
+      "I’m okay with temporary pain and healing discomfort.",
+      "Even though I don’t follow Jewish customs, I feel somewhat culturally connected.",
+      "I’ve thought about how a tattoo might affect burial traditions or family views.",
+      "I’m okay with the idea that some family members might disapprove.",
+      "I would feel confident explaining the meaning of my tattoo to a future partner or child.",
+      "I believe my current values and aesthetic will stay relatively consistent over time.",
+      "I’ve changed my mind about strong opinions before.",
+      "I can imagine myself still liking the idea of this tattoo at age 40.",
+      "I’d consider removal if I ever seriously regretted it.",
+      "My future career goals would allow for visible tattoos.",
+      "I’m in a mentally stable and clear-headed place right now.",
+      "I’m exploring this idea from curiosity, not because of emotional stress.",
+      "I would be okay with waiting another year to make sure.",
+      "I see my body as a canvas or space for self-expression.",
+      "I feel this decision is entirely my own, not someone else’s idea.",
+      "I’ve avoided making impulsive, permanent changes to my body before.",
+      "I usually do thoughtful research before making big decisions.",
+      "I’ve talked to people who have tattoos to understand their experiences.",
+      "I’d feel comfortable going to a tattoo appointment even if I had to go alone."
+    ];
+
+    const quizContainer = document.getElementById('quiz');
+
+    questions.forEach((q, i) => {
+      const div = document.createElement('div');
+      div.className = 'question';
+      div.innerHTML = `<p><strong>Q${i + 1}:</strong> ${q}</p>`;
+
+      const options = document.createElement('div');
+      options.className = 'options';
+      for (let j = 1; j <= 5; j++) {
+        options.innerHTML += `
+          <label><input type="radio" name="q${i}" value="${j}" required> ${j}</label>
+        `;
+      }
+      div.appendChild(options);
+      quizContainer.appendChild(div);
+    });
+
+    document.getElementById('quizForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let score = 0;
+      for (let i = 0; i < questions.length; i++) {
+        const selected = document.querySelector(`input[name=q${i}]:checked`);
+        if (selected) score += parseInt(selected.value);
+      }
+
+      let message = '';
+      if (score >= 140) {
+        message = "🔥 You’re ready. You've clearly thought this through and know yourself well. Just find a design that resonates with you.";
+      } else if (score >= 100) {
+        message = "🌀 You're close. You’ve put thought into this, but it may help to reflect further on your motivations and long-term feelings.";
+      } else if (score >= 70) {
+        message = "⏸ Not yet. There are still some uncertainties. Give yourself more time and space before committing.";
+      } else {
+        message = "🚫 Now’s not the time. You’re likely not emotionally or mentally ready. That’s okay — this decision can wait.";
+      }
+
+      document.getElementById('result').innerText = `Your Score: ${score}\n\n${message}`;
+    });
+  </script>
+</body>
+</html>
